@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskManager.Maui.Views.HomePage"
+             xmlns:model ="clr-namespace:TaskManager.Maui.Models"
+             xmlns:vm="clr-namespace:TaskManager.Maui.ViewModels"
+             x:DataType="vm:HomeViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{DynamicResource BackgroundColor}">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="15">
+
+        <!-- Motivational Quote -->
+        <Frame Grid.Row="0" Padding="15" CornerRadius="10" BackgroundColor="{DynamicResource AccentColor}" HasShadow="True">
+            <Label Text="{Binding MotivationalQuote}" TextColor="White" FontAttributes="Italic" LineBreakMode="WordWrap" HorizontalOptions="Center" VerticalOptions="Center"/>
+        </Frame>
+
+        <!-- Refreshable task list -->
+        <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding LoadTasksCommand}">
+            <CollectionView ItemsSource="{Binding Tasks}" ItemSizingStrategy="MeasureAllItems" Margin="0,5,0,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:TaskItem">
+                        <Frame Padding="10" CornerRadius="8" Margin="0,5,0,5" HasShadow="True" BackgroundColor="{DynamicResource BackgroundColor}">
+
+                            <Grid VerticalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <!--Tasks info-->
+                                <HorizontalStackLayout Padding="10" Spacing="15" VerticalOptions="Center">
+                                    <CheckBox IsChecked="{Binding IsCompleted}" />
+                                    <VerticalStackLayout VerticalOptions="Center">
+                                        <Label Text="{Binding Title}" 
+                                               TextColor="{DynamicResource TextColor}" 
+                                               FontAttributes="Bold" 
+                                               FontSize="16"/>
+
+                                        <Label Text="{Binding DueDate, StringFormat='{0:MMM dd yyyy}'}" 
+                                               TextColor="{DynamicResource SecondaryTextColor}" 
+                                               FontSize="14"/>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+
+                                <!--Action buttons-->
+                                <HorizontalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                                    <Button Text="✏️"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=EditTaskCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="{DynamicResource AccentColor}" 
+                                            TextColor="White" 
+                                            CornerRadius="5"/>
+
+                                    <Button Text="🗑️"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=DeleteTaskCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="Red"
+                                            TextColor="White"
+                                            CornerRadius="5"/>
+                                </HorizontalStackLayout>
+                            </Grid>
+
+                            
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Add task button -->
+        <Button Grid.Row="2" Text="Add Task"
+                Command="{Binding NavigateToAddTaskCommand}" 
+                BackgroundColor="{DynamicResource AccentColor}" 
+                TextColor="White" 
+                CornerRadius="10" 
+                HeightRequest="50">
+        </Button>
+
+    </Grid>
+
+
+</ContentPage>

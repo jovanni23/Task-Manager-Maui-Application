@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskManager.Maui.Views.SettingsPage"
+             Title="Settings"
+             BackgroundColor="{DynamicResource BackgroundColor}">
+    <VerticalStackLayout Padding="20" Spacing="20">
+       <Label Text="Appearance"
+              FontSize="20"
+              FontAttributes="Bold"
+              TextColor="{DynamicResource TextColor}"/>
+
+       <Picker x:Name="ThemePicker"
+               Title="Select Theme"
+               TextColor="{DynamicResource TextColor}"
+               SelectedIndexChanged="ThemePicker_SelectedIndexChanged">
+           <Picker.Items>
+               <x:String>System Default</x:String>
+               <x:String>Light</x:String>
+               <x:String>Dark</x:String>
+
+           </Picker.Items>
+       </Picker>
+    </VerticalStackLayout>
+</ContentPage>

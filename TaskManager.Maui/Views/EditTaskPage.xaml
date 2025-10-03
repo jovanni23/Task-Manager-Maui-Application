@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskManager.Maui.Views.EditTaskPage"
+             xmlns:vm="clr-namespace:TaskManager.Maui.ViewModels"
+             x:DataType="vm:EditTaskViewModel"
+             Title="Edit Task"
+             BackgroundColor="{DynamicResource BackgroundColor}">
+    <VerticalStackLayout Padding="20" Spacing="20">
+
+        <Label Text="Title" 
+               TextColor="{DynamicResource TextColor}" 
+               FontAttributes="Bold"/>
+
+        <Entry Text="{Binding Task.Title}" 
+               Placeholder="Task Title"/>
+
+        <Label Text="Due Date" 
+               TextColor="{DynamicResource TextColor}" 
+               FontAttributes="Bold"/>
+
+        <DatePicker Date="{Binding Task.DueDate}"/>
+
+        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+            <Label Text="Completed" 
+                   TextColor="{DynamicResource TextColor}" 
+                   VerticalOptions="Center"/>
+
+            <CheckBox IsChecked="{Binding Task.IsCompleted}"/>
+        </HorizontalStackLayout>
+
+        <Button Text="Save" 
+                Command="{Binding SaveCommand}" 
+                BackgroundColor="{DynamicResource AccentColor}" 
+                TextColor="White" 
+                CornerRadius="10"/>
+
+    </VerticalStackLayout>
+</ContentPage>
